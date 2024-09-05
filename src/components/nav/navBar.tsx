@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
@@ -7,8 +8,8 @@ import { useSession } from "next-auth/react";
 
 import LogOut from "../ui/LogOut";
 
-const NavBar = async () => {
-  const session = await auth();
+const NavBar = () => {
+  const { data: session } = useSession();
   console.log(session);
   return (
     <div className="font-inter bg-primary/[0.07] rounded-[12px] p-4 mb-12 mt-5">
