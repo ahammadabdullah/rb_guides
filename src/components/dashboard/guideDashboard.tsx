@@ -16,17 +16,6 @@ const userData = async (id: number) => {
 const GuideDashboard = async () => {
   const session = await auth();
   console.log(session);
-  // const info = {
-  //   name: "Farhan Ashhab Nur",
-  //   age: 20,
-  //   about:
-  //     "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-  //   location: "Dhaka, Bangladesh",
-  //   languages: ["English", "Bangla", "Hindi"],
-  //   email: "farhan@zeneticesports.com",
-  //   image:
-  //     "https://pixahive.com/wp-content/uploads/2021/02/An-Indian-boy-375075-pixahive-681x1024.jpg",
-  // };
   const info = await userData(Number(session?.user?.id));
 
   return (

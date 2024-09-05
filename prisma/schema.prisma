@@ -16,7 +16,7 @@ model User {
   image     String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  role      String    @default("tourist")
+  role      String    @default("guide")
   status    String    @default("pending")
   about     String?
   age       Int?

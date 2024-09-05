@@ -103,7 +103,7 @@ const Profile = ({ info }: any) => {
         <p className=" font-semibold text-sm">About You</p>
         <p className="font-medium text-[13px] text-white/50">{info?.about}</p>
         <div className="mt-10">
-          <Dialog open={open}>
+          <Dialog open={open} onOpenChange={() => setOpen(!open)}>
             <DialogTrigger asChild>
               <Button
                 onClick={() => setOpen(true)}
