@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -50,6 +51,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -72,4 +77,6 @@ const config: Config = {
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/forms")],
 };
-export default config;
+// export default config;
+
+export default withUt(config);

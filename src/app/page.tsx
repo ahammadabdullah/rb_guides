@@ -73,7 +73,7 @@ export default function Home() {
   ];
   return (
     <main>
-      <section className="flex justify-between items-center mt-20">
+      <section className="flex justify-between items-center ">
         <h1 className="text-6xl font-medium xl:w-[50%] font-clash">
           <span className="text-primary block">Find a local</span>
           to show you around
@@ -84,8 +84,8 @@ export default function Home() {
             type="text"
             placeholder="Search your destination..."
           />
-          <Button className="h-full w-[70px] rounded-[12px]">
-            <Search width={28} height={28} />
+          <Button className="h-full w-[70px] rounded-[12px] bg-primary/20">
+            <Search width={28} height={28} color="white" />
           </Button>
         </div>
       </section>

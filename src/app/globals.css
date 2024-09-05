@@ -43,6 +43,8 @@
     --border: 339 41% 60%;
     --input: 339 41% 80%;
     --ring: 30 40% 60%;
+    --success: 120 40% 30%;
+    --success-foreground: 339 41% 7%;
   }
 }
 @layer base {

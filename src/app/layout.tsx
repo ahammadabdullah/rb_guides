@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import NavBar from "@/components/nav/navBar";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -58,6 +59,7 @@ export default function RootLayout({
           <NavBar />
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   );
