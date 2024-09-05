@@ -19,6 +19,7 @@ model User {
   role      String    @default("tourist")
   status    String    @default("pending")
   about     String?
+  languages String[]
   age       Int?
   location  String[]
   bookings  Booking[]

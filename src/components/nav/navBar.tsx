@@ -3,12 +3,12 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Navigation, Search } from "lucide-react";
 import { auth } from "@/auth";
+import { useSession } from "next-auth/react";
 
 import LogOut from "../ui/LogOut";
 
 const NavBar = async () => {
   const session = await auth();
-  const user = session?.user;
   console.log(session);
   return (
     <div className="font-inter bg-primary/[0.07] rounded-[12px] p-4 mb-12 mt-5">
@@ -22,7 +22,7 @@ const NavBar = async () => {
         </Link>
         {/* nav links */}
         <div className="flex gap-4 items-center">
-          {session ? (
+          {session?.user ? (
             <LogOut />
           ) : (
             <Link className="text-base font-medium" href="/login">

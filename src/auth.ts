@@ -1,54 +1,79 @@
-//@ts-nocheck
-
 import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import prisma from "./lib/db";
-import bcrypt from "bcrypt";
-
+import bcrypt from "bcryptjs";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
   providers: [
     credentials({
-      async authorize(credentials): Promise<any> {
+      async authorize(
+        credentials: Partial<Record<string, unknown>>
+      ): Promise<any> {
         if (credentials === null) return null;
+        let user = null;
         try {
-          const user = await prisma.user.findFirst({
+          const dbUser = await prisma.user.findFirst({
             where: {
-              email: credentials.email,
-            },
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              password: true,
-              role: true,
-              image: true,
-              about: true,
-              age: true,
-              location: true,
+              email: credentials.email as string,
             },
           });
-          console.log(user);
-          if (user) {
+          console.log(dbUser);
+          if (dbUser) {
             const isMatch = await bcrypt.compare(
-              credentials.password,
-              user.password
+              credentials.password as string,
+              dbUser.password
             );
             if (isMatch) {
+              user = dbUser;
               return user;
             } else {
-              throw new Error("Password is incorrect");
+              return user;
             }
           } else {
-            throw new Error("User not found");
+            return user;
           }
         } catch (e) {
           console.log(e);
-          throw new Error("Something went wrong. Please try again later.");
+          return user;
         }
+        return user;
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+    signOut: "/",
+    error: "/login",
+  },
+  callbacks: {
+    authorized({ request: { nextUrl }, auth }) {
+      const isLoggedIn = !!auth?.user;
+      const { pathname } = nextUrl;
+      const role = auth?.user?.role || "tourist";
+      if (pathname.startsWith("/login") && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+
+      return !!auth;
+    },
+    jwt({ token, user, trigger, session }) {
+      if (user) {
+        token.id = user.id as string;
+        token.role = user.role as string;
+        token.status = user.status as string;
+      }
+      if (trigger === "update" && session) {
+        token = { ...token, ...session };
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id as any;
+      session.user.role = token.role as string;
+      session.user.status = token.status as string;
+      return session;
+    },
+  },
 });

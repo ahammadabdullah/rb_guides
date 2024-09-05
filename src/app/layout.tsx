@@ -4,6 +4,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import NavBar from "@/components/nav/navBar";
 import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -53,14 +54,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${ClashDisplay.variable} p-3`}>
-        <div className="max-w-8xl mx-auto">
-          <NavBar />
-          {children}
-        </div>
-        <Toaster />
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <body className={`${inter.variable} ${ClashDisplay.variable} p-3`}>
+          <div className="max-w-8xl mx-auto">
+            <NavBar />
+            {children}
+          </div>
+          <Toaster />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
