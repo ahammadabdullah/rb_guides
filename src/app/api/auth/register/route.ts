@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
         image: url,
       },
     });
+    console.log(res);
     return NextResponse.json({
       success: "true",
       message: "Sign up successful",

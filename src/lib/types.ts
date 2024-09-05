@@ -6,5 +6,5 @@ export type User = {
   role?: string;
   about?: string;
   age?: number;
-  location?: Array<string>;
+  location?: string;
 };

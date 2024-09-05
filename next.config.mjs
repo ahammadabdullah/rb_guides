@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         
-        domains: ['utfs.io', 'plus.unsplash.com', 'pixahive.com'],
+        domains: ['utfs.io', 'plus.unsplash.com', 'pixahive.com','avatar.vercel.sh'],
     },
 };
 

@@ -1,18 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { LoaderPinwheel } from "lucide-react";
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const LoginPage = () => {
+  const [loading, setLoading] = React.useState(false);
   const session = getSession();
   console.log(session);
 
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
@@ -39,6 +42,7 @@ const LoginPage = () => {
       });
       router.push("/dashboard");
     }
+    setLoading(false);
   };
 
   return (
@@ -77,7 +81,7 @@ const LoginPage = () => {
             type="submit"
             className="rounded-[12px] w-full h-14 text-2xl bg-primary/20 text-white"
           >
-            Login
+            {loading ? <LoaderPinwheel className="animate-spin" /> : "Login"}
           </Button>
         </div>
       </form>

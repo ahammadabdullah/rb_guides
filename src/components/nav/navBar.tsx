@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { Navigation, Search } from "lucide-react";
-import { auth } from "@/auth";
 import { useSession } from "next-auth/react";
 
 import LogOut from "../ui/LogOut";

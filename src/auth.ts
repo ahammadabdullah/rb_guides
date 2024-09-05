@@ -19,7 +19,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email: credentials.email as string,
             },
           });
-          console.log(dbUser);
           if (dbUser) {
             const isMatch = await bcrypt.compare(
               credentials.password as string,
@@ -35,7 +34,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return user;
           }
         } catch (e) {
-          console.log(e);
           return user;
         }
         return user;
@@ -51,7 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized({ request: { nextUrl }, auth }) {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
-      const role = auth?.user?.role || "tourist";
       if (pathname.startsWith("/login") && isLoggedIn) {
         return Response.redirect(new URL("/", nextUrl));
       }

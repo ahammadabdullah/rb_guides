@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import prisma from "@/lib/db";
 import { UploadButton } from "@/lib/utils";
+import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const RegisterPage = () => {
   const [image, setImage] = React.useState<any | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hi");
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
     const email = formData.get("email");
@@ -44,6 +46,7 @@ const RegisterPage = () => {
           });
         }
       });
+    setLoading(false);
   };
   return (
     <div>
@@ -114,7 +117,7 @@ const RegisterPage = () => {
             type="submit"
             className="rounded-[12px] w-full h-14 text-2xl bg-primary/20 text-white"
           >
-            Sign Up
+            {loading ? <LoaderPinwheel className="animate-spin" /> : "Sign Up"}
           </Button>
         </div>
       </form>
