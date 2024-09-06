@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RB Guides
 
-## Getting Started
+## Overview
 
-First, run the development server:
+RB Guides is a simple and efficient guide service provider application, built using modern web development technologies. The platform allows users to book a guide for a day, and guides can manage their booking requests through an intuitive dashboard. The application also features a role-based authentication system, protecting all private routes and APIs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Database:** [Supabase](https://supabase.io/)
+- **ORM:** [Prisma](https://www.prisma.io/)
+- **Component Library:** [Shadcn](https://shadcn.dev/)
+- **Authentication:** [NextAuth v5](https://next-auth.js.org/)
+- **File Uploads:** [UploadThing](https://uploadthing.com/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Guide Booking System:**
 
-## Learn More
+  - Users can book a guide for a specified date.
+  - Guides can view booking requests in their dashboard.
+  - Guides have the ability to accept or decline booking requests.
 
-To learn more about Next.js, take a look at the following resources:
+- **Admin Dashboard:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Admins can manage guide applications.
+  - Admins can accept or reject applications to onboard guides.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Role-Based Authentication:**
 
-## Deploy on Vercel
+  - Integrated with NextAuth v5 for robust, secure authentication.
+  - Role-based access ensures guides and admins have different levels of permissions.
+  - All private routes and API endpoints are fully protected based on user roles.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Image Uploads:**
+  - Guides can upload their profile pictures using the UploadThing service.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/rb-guides.git
+   cd rb-guides
+   ```
