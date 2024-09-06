@@ -43,3 +43,20 @@ RB Guides is a simple and efficient guide service provider application, built us
    git clone https://github.com/your-username/rb-guides.git
    cd rb-guides
    ```
+
+2. Install Dependencies
+
+   ```bash
+   npm i
+   ```
+
+3. Setup Environment variables . Checkout the .env.example file.
+4. Run database migrations to set up your database schema.
+   ```bash
+   npx prisma migrate dev
+   ```
+5. Run the application
+
+   ```bash
+   npm run dev
+   ```
