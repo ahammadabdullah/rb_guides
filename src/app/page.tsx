@@ -1,76 +1,88 @@
 import GuideCard from "@/components/home/guideCard";
 import { Button } from "@/components/ui/button";
+import prisma from "@/lib/db";
 import { Search } from "lucide-react";
 
-export default function Home() {
-  const guides = [
-    {
-      id: 25,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
+async function getGuides() {
+  const res = await prisma.user.findMany({
+    where: {
+      role: "guide",
+      status: "accepted",
     },
-    {
-      id: 26,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
-    },
-    {
-      id: 1,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
-    },
-    {
-      id: 1,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
-    },
-    {
-      id: 1,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
-    },
-    {
-      id: 1,
-      name: "Shipra Rahman",
-      image:
-        "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      age: 25,
-      location: "Dhaka, Bangladesh",
-      description:
-        "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
-      price: 50,
-    },
-  ];
+  });
+  return res;
+}
+
+export default async function Home() {
+  const guides = await getGuides();
+  // const guides = [
+  //   {
+  //     id: 25,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  //   {
+  //     id: 26,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Shipra Rahman",
+  //     image:
+  //       "https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     age: 25,
+  //     location: "Dhaka, Bangladesh",
+  //     description:
+  //       "They there im there for ur best trip ever. I do travel to be there, to know them and to know myself. So be with m",
+  //     price: 50,
+  //   },
+  // ];
   return (
     <main>
       <section className="flex justify-between items-center ">

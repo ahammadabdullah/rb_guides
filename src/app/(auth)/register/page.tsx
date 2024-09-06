@@ -21,7 +21,6 @@ const RegisterPage = () => {
     const email = formData.get("email");
     const password = formData.get("password");
     const url = image?.url ?? `https://avatar.vercel.sh/${name}`;
-    console.log(name, email, password, url);
     const res = await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify({ name, email, password, url }),

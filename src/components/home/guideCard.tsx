@@ -36,7 +36,6 @@ const GuideCard = ({ data }: any) => {
       note: formData.get("note"),
       userId: data.id,
     };
-    console.log(info);
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
@@ -61,7 +60,6 @@ const GuideCard = ({ data }: any) => {
         });
       }
     } catch (error) {
-      console.log(error);
       toast({
         title: "Sorry!",
         description: "Something went wrong, please try again later",
@@ -88,7 +86,7 @@ const GuideCard = ({ data }: any) => {
           </h1>
           <p className="text-base font-semibold">{data.location}</p>
         </div>
-        <p className="font-medium text-sm text-white/60">{data.description}</p>
+        <p className="font-medium text-sm text-white/60">{data.about}</p>
         <div className="flex justify-between">
           <p className="text-2xl font-extrabold">$ {data.price}/day</p>
 

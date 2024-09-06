@@ -28,18 +28,14 @@ export async function PATCH(request: NextRequest) {
         image: url,
       },
     });
-    console.log(res);
     return NextResponse.json({
       success: "true",
       message: "Profile updated successfully",
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({
       message: "Something went wrong, please try again",
       success: "false",
     });
   }
-
-  console;
 }

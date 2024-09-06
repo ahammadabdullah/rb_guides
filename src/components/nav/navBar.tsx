@@ -9,7 +9,6 @@ import LogOut from "../ui/LogOut";
 
 const NavBar = () => {
   const { data: session } = useSession();
-  console.log(session);
   return (
     <div className="font-inter bg-primary/[0.07] rounded-[12px] p-4 mb-12 mt-5">
       <nav className="flex justify-between">

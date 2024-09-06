@@ -10,7 +10,6 @@ import React from "react";
 const LoginPage = () => {
   const [loading, setLoading] = React.useState(false);
   const session = getSession();
-  console.log(session);
 
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,10 +24,8 @@ const LoginPage = () => {
       password: password,
       redirect: false,
     });
-    console.log("response---->", res);
 
     if (res?.error) {
-      console.log("object");
       toast({
         title: "Error!!",
         description: "Invalid email or password",

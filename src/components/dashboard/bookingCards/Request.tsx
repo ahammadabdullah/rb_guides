@@ -1,26 +1,52 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { acceptBooking, declineBooking } from "@/lib/api";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const Request = () => {
-  const info = {
-    name: "Rafsan Islam Mika",
-    number: "01700000000",
-    location: "Tejgao Road, Dhaka",
-    email: "farhan@zeneticesports.com",
-    image:
-      "https://pixahive.com/wp-content/uploads/2021/02/An-Indian-boy-375075-pixahive-681x1024.jpg",
-    note: "help me pick out some good food places and if you've a cat its a plus!",
-    date: "12th October 2021",
-    time: "2:00 PM",
+const Request = (data: any) => {
+  const info = data.data;
+
+  const handleAcceptRequest = async () => {
+    const res = await acceptBooking(info.id);
+    if (res.success === "true") {
+      toast({
+        variant: "success",
+        title: "Hurray!",
+        description: "Booking accepted successfully",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Oops!",
+        description: "Something went wrong, please try again",
+      });
+    }
+  };
+  const handleDeclineRequest = async () => {
+    const res = await declineBooking(info.id);
+    if (res.success === "true") {
+      toast({
+        variant: "success",
+        title: "Hurray!",
+        description: "Booking declined successfully",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Oops!",
+        description: "Something went wrong, please try again",
+      });
+    }
   };
   return (
     <div className="bg-primary/[0.07] rounded-[12px] flex  flex-col justify-between  w-full p-10  h-[293px] items-center font-inter">
       <div className=" flex gap-5">
         <div className="flex gap-10">
           <Image
-            src={info.image}
+            src={info?.image ?? `https://avatar.vercel.sh/${info?.name}`}
             alt="Tourist Image"
             width={200}
             height={200}
@@ -53,7 +79,9 @@ const Request = () => {
           <div className="flex items-center gap-3">
             <CalendarDays color="#D8A3B5" />
             <div>
-              <p className="text-2xl font-bold">Request for {info.date}</p>
+              <p className="text-2xl font-bold">
+                Request for {new Date(info?.date).toLocaleDateString("en-US")}
+              </p>
               <p className="text-white/50 text-xl font-semibold">
                 around {info.time} BST
               </p>
@@ -71,10 +99,16 @@ const Request = () => {
         </div>
       </div>
       <div className="flex items-end justify-end w-full gap-5">
-        <Button className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6">
+        <Button
+          onClick={() => handleDeclineRequest()}
+          className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
+        >
           Decline
         </Button>
-        <Button className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary py-6">
+        <Button
+          onClick={() => handleAcceptRequest()}
+          className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary py-6"
+        >
           Accept
         </Button>
       </div>
