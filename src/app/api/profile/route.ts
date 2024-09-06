@@ -1,11 +1,17 @@
+import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(request: NextRequest) {
   const { id, name, url, about, age, lang, location } = await request.json();
-  console.log("location -------->", location);
   const languages = lang.split(",");
-
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({
+      message: "You are not authorized to perform this action",
+      success: "false",
+    });
+  }
   try {
     const res = await prisma.user.update({
       where: {

@@ -33,8 +33,10 @@ model Booking {
   location  String
   date      DateTime
   time      String
+  email     String
   note      String?
   number    String
   status    String   @default("pending")
+  name      String
   user      User     @relation(fields: [userId], references: [id])
 }

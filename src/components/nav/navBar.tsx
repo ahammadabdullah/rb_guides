@@ -29,9 +29,18 @@ const NavBar = () => {
               Guide Login
             </Link>
           )}
-          <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
-            Become a guide
-          </Button>
+          {session?.user ? (
+            <Link href={"/dashboard"}>
+              <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
+                Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
+              Become a guide
+            </Button>
+          )}
+
           <Search width={28} height={28} />
         </div>
       </nav>

@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogDescription,
-  DialogClose,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -112,7 +111,7 @@ const Profile = ({ info }: any) => {
                 Edit your information
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-[500px] rounded-[12px]">
+            <DialogContent className="max-w-[500px] border-none !rounded-[12px]">
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
