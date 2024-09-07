@@ -52,7 +52,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (pathname.startsWith("/login") && isLoggedIn) {
         return Response.redirect(new URL("/", nextUrl));
       }
-
       return !!auth;
     },
     jwt({ token, user, trigger, session }) {

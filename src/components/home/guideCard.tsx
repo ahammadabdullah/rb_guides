@@ -67,6 +67,7 @@ const GuideCard = ({ data }: any) => {
       });
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
