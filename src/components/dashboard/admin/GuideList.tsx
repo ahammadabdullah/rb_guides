@@ -13,13 +13,10 @@ import { acceptGuide, getAllGuides } from "@/lib/api";
 import React, { useEffect, useState } from "react";
 
 const GuideList = ({ guides }: { guides: any }) => {
-  console.log(guides);
   const Headers = ["ID", "Name", "Email", "Age", "Price", "Status", "Action"];
 
   const handleChangeStatus = async (id: number) => {
-    console.log(id);
     const res = await acceptGuide(id);
-    // console.log(res);
     if (res.success === "true") {
       toast({
         variant: "success",

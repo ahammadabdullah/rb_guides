@@ -69,7 +69,6 @@ export async function GET(request: NextRequest) {
       bookings,
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({
       message: "Something went wrong, please try again",
       success: "false",
@@ -91,7 +90,6 @@ export async function PUT(request: NextRequest) {
         status: status as string,
       },
     });
-    console.log(res);
     return NextResponse.json({
       success: "true",
       message: `Booking ${status} successfully`,

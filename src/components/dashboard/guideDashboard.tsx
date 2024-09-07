@@ -23,7 +23,6 @@ const GuideDashboard = async () => {
   const upcomingBookings = upcomingBookingsData.bookings;
   const pendingRequestsData = await getBookingRequests(id as string);
   const pendingRequests = pendingRequestsData.bookings;
-  console.log(pendingRequests);
   return (
     <div>
       <Profile info={info} />

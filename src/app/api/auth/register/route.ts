@@ -24,6 +24,4 @@ export async function POST(request: NextRequest) {
       success: "false",
     });
   }
-
-  console;
 }

@@ -43,7 +43,6 @@ const Profile = ({ info }: any) => {
     const location = formData.get("location");
     const lang = formData.get("languages");
     const age = formData.get("age");
-    // console.log(name, about, location, lang, age);
     const res = await fetch("/api/profile", {
       method: "PATCH",
       body: JSON.stringify({
@@ -58,7 +57,6 @@ const Profile = ({ info }: any) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success === "true") {
           toast({
             title: "Success",
@@ -77,7 +75,6 @@ const Profile = ({ info }: any) => {
     setLoading(false);
     window.location.reload();
   };
-  console.log(info);
   return (
     <section className="bg-primary/[0.07] rounded-[12px] w-full grid grid-cols-3 p-10 pl-14 h-[336px] justify-center items-center font-inter mb-20">
       <div className="flex  flex-col justify-between space-y-10">
