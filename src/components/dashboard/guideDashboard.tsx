@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import Profile from "../home/Profile";
 import { getBookingRequests, getUpcomingBookings } from "@/lib/api";
 import NotFound from "./NotFound";
+import NotVerified from "./NotVerified";
 const userData = async (id: number) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -26,34 +27,40 @@ const GuideDashboard = async () => {
   return (
     <div>
       <Profile info={info} />
-      <section className="mb-20">
-        <h3 className="text-4xl font-medium font-clash mb-5">
-          Upcoming Bookings
-        </h3>
-        <div className="flex flex-col gap-10">
-          {upcomingBookings?.length > 0 ? (
-            upcomingBookings.map((booking: any, i: number) => (
-              <Upcoming key={i} data={booking} />
-            ))
-          ) : (
-            <NotFound />
-          )}
-        </div>
-      </section>
-      <section className="mb-20">
-        <h3 className="text-4xl font-medium font-clash mb-5">
-          Booking requests
-        </h3>
-        <div className="flex flex-col gap-10">
-          {pendingRequests?.length > 0 ? (
-            pendingRequests.map((booking: any, i: number) => (
-              <Request key={i} data={booking} />
-            ))
-          ) : (
-            <NotFound />
-          )}
-        </div>
-      </section>
+      {info?.status === "pending" ? (
+        <NotVerified />
+      ) : (
+        <>
+          <section className="mb-20">
+            <h3 className="text-4xl font-medium font-clash mb-5">
+              Upcoming Bookings
+            </h3>
+            <div className="flex flex-col gap-10">
+              {upcomingBookings?.length > 0 ? (
+                upcomingBookings.map((booking: any, i: number) => (
+                  <Upcoming key={i} data={booking} />
+                ))
+              ) : (
+                <NotFound />
+              )}
+            </div>
+          </section>
+          <section className="mb-20">
+            <h3 className="text-4xl font-medium font-clash mb-5">
+              Booking requests
+            </h3>
+            <div className="flex flex-col gap-10">
+              {pendingRequests?.length > 0 ? (
+                pendingRequests.map((booking: any, i: number) => (
+                  <Request key={i} data={booking} />
+                ))
+              ) : (
+                <NotFound />
+              )}
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 };

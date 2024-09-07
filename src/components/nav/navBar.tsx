@@ -6,9 +6,12 @@ import { Navigation, Search } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 import LogOut from "../ui/LogOut";
+import { usePathname } from "next/navigation";
 
 const NavBar = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
+
   return (
     <div className="font-inter bg-primary/[0.07] rounded-[12px] p-4 mb-12 mt-5">
       <nav className="flex justify-between">
@@ -21,23 +24,19 @@ const NavBar = () => {
         </Link>
         {/* nav links */}
         <div className="flex gap-4 items-center">
+          {session?.user ? <LogOut /> : <span></span>}
           {session?.user ? (
-            <LogOut />
-          ) : (
-            <Link className="text-base font-medium" href="/login">
-              Guide Login
-            </Link>
-          )}
-          {session?.user ? (
-            <Link href={"/dashboard"}>
+            <Link href={pathname === "/dashboard" ? "/" : "/dashboard"}>
               <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
-                Dashboard
+                {pathname === "/dashboard" ? "Home" : "Dashboard"}
               </Button>
             </Link>
           ) : (
-            <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
-              Become a guide
-            </Button>
+            <Link href={"/login"}>
+              <Button className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]">
+                Sign In
+              </Button>
+            </Link>
           )}
 
           <Search width={28} height={28} />
