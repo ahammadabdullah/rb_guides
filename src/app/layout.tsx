@@ -56,7 +56,9 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <html lang="en">
-        <body className={`${inter.variable} ${ClashDisplay.variable} p-3`}>
+        <body
+          className={`${inter.variable} ${ClashDisplay.variable} px-3 pt-3`}
+        >
           <div className="max-w-8xl mx-auto">
             <NavBar />
             {children}

@@ -10,7 +10,6 @@ const Upcoming = (data: any) => {
   const info = data.data;
   const handleCancelBooking = async () => {
     const res = await cancelBooking(info.id);
-    console.log("--------------------ress-----------", res);
     if (res.success === "true") {
       toast({
         variant: "success",

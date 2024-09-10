@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Loader, Search } from "lucide-react";
 import GuideCard from "./guideCard";
+import Footer from "../footer/Footer";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,6 +68,7 @@ const HomePage = () => {
           <GuideCard key={guide.id} data={guide} />
         ))}
       </section>
+      <Footer />
     </>
   );
 };

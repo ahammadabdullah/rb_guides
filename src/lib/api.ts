@@ -24,6 +24,7 @@ export async function cancelBooking(id: number | string) {
     .then((res) => res.json())
     .then((res) => {
       revalidateTag("upcoming");
+      revalidateTag("bookings");
       return res;
     });
 }
@@ -58,6 +59,13 @@ export async function getAllGuides() {
   return fetch(`${process.env.URL}/api/guides`, {
     headers: headers(),
     next: { tags: ["guides"] },
+  }).then((res) => res.json().then((res) => res));
+}
+
+export async function getAllBookings() {
+  return fetch(`${process.env.URL}/api/bookings/all`, {
+    headers: headers(),
+    next: { tags: ["bookings"] },
   }).then((res) => res.json());
 }
 

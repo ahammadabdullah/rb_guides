@@ -33,7 +33,7 @@ const GuideList = ({ guides }: { guides: any }) => {
   };
   return (
     <div>
-      <Table className="text-xl">
+      <Table className="text-xl ">
         <TableHeader>
           <TableRow>
             {Headers.map((header, index) => (

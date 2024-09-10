@@ -24,6 +24,13 @@ const NavBar = () => {
         </Link>
         {/* nav links */}
         <div className="flex gap-4 items-center">
+          {session?.user ? (
+            <></>
+          ) : (
+            <Link className="font-medium" href={"/about"}>
+              About Us
+            </Link>
+          )}
           {session?.user ? <LogOut /> : <span></span>}
           {session?.user ? (
             <Link href={pathname === "/dashboard" ? "/" : "/dashboard"}>
