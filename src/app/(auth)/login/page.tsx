@@ -66,6 +66,7 @@ const LoginPage = () => {
             Password
           </label>
           <input
+            autoComplete=""
             className="w-full bg-primary/[0.07] border-none rounded-[12px] pl-6 focus:ring-0 focus:outline-none h-14 text-xl mt-2 autofill:bg-primary/[0.07] autofill:border-none autofill:text-xl selection:bg-primary/[0.07]"
             type="password"
             name="password"

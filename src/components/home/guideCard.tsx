@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardTitle } from "../ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
@@ -17,11 +17,13 @@ import { CopyIcon, LoaderPinwheel } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "@/hooks/use-toast";
+import { getUser } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
-const GuideCard = ({ data }: any) => {
+const GuideCard = ({ data, user }: any) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
@@ -45,6 +47,7 @@ const GuideCard = ({ data }: any) => {
         },
       });
       const json = await res.json();
+      console.log(json);
       if (json.success === "true") {
         toast({
           title: "Booked successfully",
@@ -68,6 +71,18 @@ const GuideCard = ({ data }: any) => {
     } finally {
       setLoading(false);
       setOpen(false);
+    }
+  };
+  const handleModal = () => {
+    if (!user) {
+      toast({
+        title: "Please login first",
+        description: "You need to login to book a guide",
+        variant: "destructive",
+      });
+      router.push("/login");
+    } else {
+      setOpen(true);
     }
   };
 
@@ -94,7 +109,7 @@ const GuideCard = ({ data }: any) => {
           <Dialog open={open} onOpenChange={() => setOpen(!open)}>
             <DialogTrigger asChild>
               <Button
-                onClick={() => setOpen(!open)}
+                onClick={handleModal}
                 className="font-clash bg-primary text-[22px] font-medium text-black  rounded-[8px]"
               >
                 Book Now
@@ -117,6 +132,8 @@ const GuideCard = ({ data }: any) => {
                       id="name"
                       name="name"
                       required
+                      disabled
+                      defaultValue={user?.name}
                       className="col-span-3 rounded-[8px] border-none bg-primary/[0.07] h-14 pl-4"
                     />
                   </div>
@@ -128,6 +145,8 @@ const GuideCard = ({ data }: any) => {
                       required
                       name="email"
                       id="email"
+                      defaultValue={user?.email}
+                      disabled
                       className="col-span-3 rounded-[8px] border-none bg-primary/[0.07] h-14 pl-4"
                     />
                   </div>
@@ -139,6 +158,7 @@ const GuideCard = ({ data }: any) => {
                       name="phone"
                       required
                       id="phone"
+                      defaultValue={user?.phone}
                       className="col-span-3 rounded-[8px] border-none bg-primary/[0.07] h-14 pl-4"
                     />
                   </div>

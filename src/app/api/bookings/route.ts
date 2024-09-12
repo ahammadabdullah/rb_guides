@@ -6,10 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const info = await request.json();
   const bookingDate = new Date(info.date);
+  const session = await auth();
   // Check if the guide has any accepted bookings on the same date
   const existingBooking = await prisma.booking.findFirst({
     where: {
-      userId: info.userId,
+      guideId: info.userId,
       date: bookingDate,
       status: "accepted",
     },
@@ -23,14 +24,15 @@ export async function POST(request: NextRequest) {
   try {
     const res = await prisma.booking.create({
       data: {
-        userId: info.userId,
-        name: info.name,
-        email: info.email,
+        userId: Number(session?.user?.id),
+        name: session?.user.name as string,
+        email: session?.user.email as string,
         number: info.phone,
         date: bookingDate,
         time: info.time,
         location: info.location,
         note: info?.note ?? "",
+        guideId: info.userId,
       },
     });
     return NextResponse.json({
@@ -38,6 +40,7 @@ export async function POST(request: NextRequest) {
       message: "Booked successfully",
     });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({
       message: "Something went wrong, please try again",
       success: "false",
@@ -57,10 +60,13 @@ export async function GET(request: NextRequest) {
   const searchParams = new URLSearchParams(url.searchParams);
   const userId = searchParams.get("id");
   const status = searchParams.get("status");
+  const role = session?.user.role;
+
   try {
+    // for user
     const bookings = await prisma.booking.findMany({
       where: {
-        userId: Number(userId),
+        guideId: Number(userId),
         status: status as string,
       },
     });

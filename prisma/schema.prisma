@@ -9,26 +9,31 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String
-  password  String
-  image     String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  role      String    @default("guide")
-  status    String    @default("pending")
-  about     String?
-  age       Int?      @default(25)
-  price     Int?      @default(25)
-  location  String?
-  languages String[]
-  bookings  Booking[]
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  name        String
+  password    String
+  image       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  role        String    @default("user")
+  status      String    @default("pending")
+  about       String?
+  age         Int?      @default(25)
+  price       Int?      @default(25)
+  location    String?
+  languages   String[]
+  bookings    Booking[] @relation("UserBookings")
+  guides      Booking[] @relation("GuideBookings")
+  tickets     ticket[]
+  avgRating   Float?    @default(0)
+  totalRating Int?      @default(0)
 }
 
 model Booking {
   id        Int      @id @default(autoincrement())
   userId    Int
+  guideId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   location  String
@@ -39,5 +44,18 @@ model Booking {
   number    String
   status    String   @default("pending")
   name      String
+  rating    Int?     @default(0)
+  user      User     @relation("UserBookings", fields: [userId], references: [id])
+  guide     User     @relation("GuideBookings", fields: [guideId], references: [id])
+}
+
+model ticket {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
   user      User     @relation(fields: [userId], references: [id])
 }

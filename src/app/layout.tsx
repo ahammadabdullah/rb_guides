@@ -6,6 +6,7 @@ import NavBar from "@/components/nav/navBar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+import "@smastrom/react-rating/style.css";
 
 export const metadata: Metadata = {
   title: "RB Guides",

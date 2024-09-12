@@ -4,12 +4,14 @@ import { Button } from "../ui/button";
 import { Loader, Search } from "lucide-react";
 import GuideCard from "./guideCard";
 import Footer from "../footer/Footer";
+import { getUser } from "@/lib/api";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
   const [guides, setGuides] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedTerm(searchTerm);
@@ -24,6 +26,7 @@ const HomePage = () => {
       fetchGuides(debouncedTerm);
     }
   }, [debouncedTerm]);
+
   const fetchGuides = async (term: string) => {
     try {
       setLoading(true);
@@ -36,7 +39,14 @@ const HomePage = () => {
       setLoading(false);
     }
   };
-
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getUser();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
   return (
     <>
       <section className="flex justify-between items-center ">
@@ -65,7 +75,7 @@ const HomePage = () => {
           </div>
         )}
         {guides.map((guide: any) => (
-          <GuideCard key={guide.id} data={guide} />
+          <GuideCard key={guide.id} data={guide} user={user} />
         ))}
       </section>
       <Footer />

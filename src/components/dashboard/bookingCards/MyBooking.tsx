@@ -5,8 +5,9 @@ import { cancelBooking } from "@/lib/api";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import RatingComponent from "../user/RatingComponent";
 
-const Upcoming = (data: any) => {
+const MyBooking = (data: any) => {
   const info = data.data;
   const handleCancelBooking = async () => {
     const res = await cancelBooking(info.id);
@@ -24,6 +25,7 @@ const Upcoming = (data: any) => {
       });
     }
   };
+  console.log("rating", info.rating);
   return (
     <div className="bg-primary/[0.07] rounded-[12px] flex  flex-col justify-between  w-full p-10  h-[293px]  font-inter">
       <div className=" flex gap-5">
@@ -36,12 +38,7 @@ const Upcoming = (data: any) => {
             className="w-[154px] h-[154px] rounded-[15px]"
           />
           <div className="text-white ">
-            <p
-              className="text-3xl font-bold mb-5
-              "
-            >
-              {info?.name}
-            </p>
+            <p className="text-3xl font-bold mb-5">{info?.name}</p>
             <p className="text-white/50 text-xl font-medium mb-3">
               <span className="text-xl font-bold pr-1 text-white">Email:</span>
               {info?.email}
@@ -82,15 +79,20 @@ const Upcoming = (data: any) => {
         </div>
       </div>
       <div className="flex items-end justify-end w-full">
-        <Button
+        {/* <Button
           onClick={() => handleCancelBooking()}
           className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
         >
           Cancel Booking
-        </Button>
+        </Button> */}
+        <RatingComponent
+          id={info?.guideId}
+          bookingId={info.id}
+          rating={info.rating}
+        />
       </div>
     </div>
   );
 };
 
-export default Upcoming;
+export default MyBooking;
