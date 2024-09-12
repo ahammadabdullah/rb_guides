@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { cancelBooking } from "@/lib/api";
+import { cancelMyBooking } from "@/lib/api";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -10,7 +10,7 @@ import RatingComponent from "../user/RatingComponent";
 const MyBooking = (data: any) => {
   const info = data.data;
   const handleCancelBooking = async () => {
-    const res = await cancelBooking(info.id);
+    const res = await cancelMyBooking(info.id);
     if (res.success === "true") {
       toast({
         variant: "success",
@@ -79,17 +79,28 @@ const MyBooking = (data: any) => {
         </div>
       </div>
       <div className="flex items-end justify-end w-full">
-        {/* <Button
-          onClick={() => handleCancelBooking()}
-          className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
-        >
-          Cancel Booking
-        </Button> */}
-        <RatingComponent
-          id={info?.guideId}
-          bookingId={info.id}
-          rating={info.rating}
-        />
+        {info.status === "completed" ? (
+          <RatingComponent
+            disable={info.rating !== 0}
+            id={info?.guideId}
+            bookingId={info.id}
+            rating={info.rating}
+          />
+        ) : info.status === "cancelled" ? (
+          <Button
+            disabled
+            className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
+          >
+            Booking Canceled
+          </Button>
+        ) : (
+          <Button
+            onClick={() => handleCancelBooking()}
+            className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
+          >
+            Cancel Booking
+          </Button>
+        )}
       </div>
     </div>
   );

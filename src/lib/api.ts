@@ -19,7 +19,7 @@ export async function getBookingRequests(id: number | string) {
 }
 
 export async function cancelBooking(id: number | string) {
-  return fetch(`${process.env.URL}/api/bookings?id=${id}&status=canceled`, {
+  return fetch(`${process.env.URL}/api/bookings?id=${id}&status=cancelled`, {
     method: "PUT",
     headers: headers(),
   })
@@ -170,4 +170,16 @@ export async function rateGuide(
       message: "Something went wrong, please try again",
     };
   }
+}
+
+export async function cancelMyBooking(id: number | string) {
+  return fetch(`${process.env.URL}/api/bookings/me?id=${id}`, {
+    method: "PUT",
+    headers: headers(),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      revalidateTag("myBookings");
+      return res;
+    });
 }

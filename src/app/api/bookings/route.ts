@@ -36,14 +36,13 @@ export async function POST(request: NextRequest) {
       },
     });
     return NextResponse.json({
-      success: "true",
+      success: true,
       message: "Booked successfully",
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({
       message: "Something went wrong, please try again",
-      success: "false",
+      success: false,
     });
   }
 }

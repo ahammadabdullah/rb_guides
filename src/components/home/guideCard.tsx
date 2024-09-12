@@ -19,6 +19,8 @@ import { Input } from "../ui/input";
 import { toast } from "@/hooks/use-toast";
 import { getUser } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { revalidateTag } from "next/cache";
+import { Rating } from "@smastrom/react-rating";
 
 const GuideCard = ({ data, user }: any) => {
   const [open, setOpen] = useState(false);
@@ -47,8 +49,10 @@ const GuideCard = ({ data, user }: any) => {
         },
       });
       const json = await res.json();
-      console.log(json);
-      if (json.success === "true") {
+      console.log("response", json);
+      if (json.success) {
+        console.log("true");
+        revalidateTag("myBookings");
         toast({
           title: "Booked successfully",
           description:
@@ -56,6 +60,7 @@ const GuideCard = ({ data, user }: any) => {
           variant: "success",
         });
       } else {
+        console.log("false");
         toast({
           title: "Sorry!",
           description: json.message,
@@ -96,10 +101,13 @@ const GuideCard = ({ data, user }: any) => {
         className=" w-full h-[434px] rounded-t-[10px] object-cover"
       />
       <CardContent className="p-3 bg-[#3E2930] rounded-[10px] w-[90%] mx-auto space-y-3 absolute bottom-[3%] left-[4%]">
-        <div>
+        <div className="flex items-center justify-between">
           <h1 className="text-2xl font-extrabold">
             {data.name} <span>({data.age})</span>
           </h1>
+          <div className="w-20">
+            <Rating value={data.rating} readOnly />
+          </div>
           <p className="text-base font-semibold">{data.location}</p>
         </div>
         <p className="font-medium text-sm text-white/60">{data.about}</p>

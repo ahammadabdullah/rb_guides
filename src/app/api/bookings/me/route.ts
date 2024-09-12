@@ -31,3 +31,28 @@ export async function GET(request: NextRequest) {
     });
   }
 }
+export async function PUT(request: NextRequest) {
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.searchParams);
+  const bookingId = searchParams.get("id");
+  const status = "cancelled";
+  try {
+    const res = await prisma.booking.update({
+      where: {
+        id: Number(bookingId),
+      },
+      data: {
+        status: status as string,
+      },
+    });
+    return NextResponse.json({
+      success: "true",
+      message: `Booking ${status} successfully`,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Something went wrong, please try again",
+      success: "false",
+    });
+  }
+}
