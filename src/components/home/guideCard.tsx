@@ -103,7 +103,7 @@ const GuideCard = ({ data, user }: any) => {
             {data.name} <span>({data.age})</span>
           </h1>
           <div className="w-20">
-            <Rating value={data.rating} readOnly />
+            <Rating value={data.avgRating} readOnly />
           </div>
           <p className="text-base font-semibold">{data.location}</p>
         </div>
