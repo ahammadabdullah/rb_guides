@@ -18,6 +18,13 @@ export async function getBookingRequests(id: number | string) {
   }).then((res) => res.json());
 }
 
+export async function getCompletedBookings(id: number | string) {
+  return fetch(`${process.env.URL}/api/bookings?id=${id}&status=completed`, {
+    headers: headers(),
+    next: { tags: ["completed"] },
+  }).then((res) => res.json());
+}
+
 export async function cancelBooking(id: number | string) {
   return fetch(`${process.env.URL}/api/bookings?id=${id}&status=cancelled`, {
     method: "PUT",
@@ -57,6 +64,19 @@ export async function declineBooking(id: number | string) {
     });
 }
 
+export async function completeBooking(id: number | string) {
+  return fetch(`${process.env.URL}/api/bookings?id=${id}&status=completed`, {
+    method: "PUT",
+    headers: headers(),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      revalidateTag("upcoming");
+      revalidateTag("bookings");
+      revalidateTag("completed");
+      return res;
+    });
+}
 export async function getAllGuides() {
   return fetch(`${process.env.URL}/api/guides`, {
     headers: headers(),
@@ -159,7 +179,6 @@ export async function rateGuide(
       },
     });
     revalidateTag("myBookings");
-    console.log("newRating", newRating);
     return {
       success: true,
       message: "Guide rated successfully",
@@ -182,4 +201,8 @@ export async function cancelMyBooking(id: number | string) {
       revalidateTag("myBookings");
       return res;
     });
+}
+
+export async function revalidateMyBooking() {
+  revalidateTag("myBookings");
 }

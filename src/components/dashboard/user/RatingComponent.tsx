@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const RatingComponent = ({ id, bookingId, rating, disable }: any) => {
   const handleRating = async (newRating: any) => {
     const res = await rateGuide(id, newRating, bookingId);
-    console.log("res", res);
     if (res.success) {
       toast({
         title: "Rating added successfully",
@@ -22,7 +21,6 @@ const RatingComponent = ({ id, bookingId, rating, disable }: any) => {
       });
     }
   };
-  console.log("object", id);
   return (
     <div className="w-[200px]">
       <Rating readOnly={disable} value={rating} onChange={handleRating} />

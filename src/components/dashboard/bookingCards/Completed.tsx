@@ -2,45 +2,14 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { acceptBooking, declineBooking } from "@/lib/api";
+import { Rating } from "@smastrom/react-rating";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const Request = (data: any) => {
+const Completed = (data: any) => {
   const info = data.data;
 
-  const handleAcceptRequest = async () => {
-    const res = await acceptBooking(info.id);
-    if (res.success === "true") {
-      toast({
-        variant: "success",
-        title: "Hurray!",
-        description: "Booking accepted successfully",
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Oops!",
-        description: `${res.message}`,
-      });
-    }
-  };
-  const handleDeclineRequest = async () => {
-    const res = await declineBooking(info.id);
-    if (res.success === "true") {
-      toast({
-        variant: "success",
-        title: "Hurray!",
-        description: "Booking declined successfully",
-      });
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Oops!",
-        description: `${res.message}`,
-      });
-    }
-  };
   return (
     <div className="bg-primary/[0.07] rounded-[12px] flex  flex-col justify-between  w-full p-10  h-[293px] items-center font-inter">
       <div className=" flex gap-5">
@@ -99,21 +68,12 @@ const Request = (data: any) => {
         </div>
       </div>
       <div className="flex items-end justify-end w-full gap-5">
-        <Button
-          onClick={() => handleDeclineRequest()}
-          className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
-        >
-          Decline
-        </Button>
-        <Button
-          onClick={() => handleAcceptRequest()}
-          className=" w-[129px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary py-6"
-        >
-          Accept
-        </Button>
+        <div className="w-[200px]">
+          <Rating value={info.rating} readOnly />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Request;
+export default Completed;

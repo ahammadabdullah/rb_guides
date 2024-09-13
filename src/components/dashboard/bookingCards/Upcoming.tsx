@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { cancelBooking } from "@/lib/api";
+import { cancelBooking, completeBooking } from "@/lib/api";
 import { CalendarDays, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -15,6 +15,22 @@ const Upcoming = (data: any) => {
         variant: "success",
         title: "Hurray!",
         description: "Booking cancelled successfully",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Oops!",
+        description: "Something went wrong, please try again",
+      });
+    }
+  };
+  const handleCompleteBooking = async () => {
+    const res = await completeBooking(info.id);
+    if (res.success === "true") {
+      toast({
+        variant: "success",
+        title: "Hurray!",
+        description: "Booking declined successfully",
       });
     } else {
       toast({
@@ -81,12 +97,18 @@ const Upcoming = (data: any) => {
           </div>
         </div>
       </div>
-      <div className="flex items-end justify-end w-full">
+      <div className="flex items-end justify-end w-full gap-5">
         <Button
           onClick={() => handleCancelBooking()}
           className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
         >
           Cancel Booking
+        </Button>
+        <Button
+          onClick={() => handleCompleteBooking()}
+          className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
+        >
+          Complete Booking
         </Button>
       </div>
     </div>

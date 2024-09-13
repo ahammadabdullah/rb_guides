@@ -20,7 +20,6 @@ const UserDashboard = async () => {
   const info = await userData(Number(id));
   const myBookingsData = await getMyBookings(id as string);
   const myBookings = myBookingsData.bookings;
-  console.log(myBookings);
   return (
     <div>
       <Profile info={info} />

@@ -54,7 +54,6 @@ export async function PUT(request: NextRequest) {
         status: status as string,
       },
     });
-    console.log(res);
     return NextResponse.json({
       success: "true",
       message: `Guide ${status} successfully`,

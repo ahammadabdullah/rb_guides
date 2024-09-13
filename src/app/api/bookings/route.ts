@@ -57,18 +57,18 @@ export async function GET(request: NextRequest) {
   }
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.searchParams);
-  const userId = searchParams.get("id");
+  const guideId = searchParams.get("id");
   const status = searchParams.get("status");
-  const role = session?.user.role;
-
+  // console.log("---------------------------------------", guideId, status);
   try {
-    // for user
+    // for guides
     const bookings = await prisma.booking.findMany({
       where: {
-        guideId: Number(userId),
         status: status as string,
+        guideId: Number(guideId),
       },
     });
+    console.log(bookings, "bookings");
     return NextResponse.json({
       success: "true",
       bookings,
@@ -86,6 +86,18 @@ export async function PUT(request: NextRequest) {
   const searchParams = new URLSearchParams(url.searchParams);
   const bookingId = searchParams.get("id");
   const status = searchParams.get("status");
+  // check if the booking already cancelled
+  const booking = await prisma.booking.findUnique({
+    where: {
+      id: Number(bookingId),
+    },
+  });
+  if (booking?.status === "cancelled") {
+    return NextResponse.json({
+      message: "This booking has already been cancelled",
+      success: "false",
+    });
+  }
   try {
     const res = await prisma.booking.update({
       where: {

@@ -25,7 +25,6 @@ const MyBooking = (data: any) => {
       });
     }
   };
-  console.log("rating", info.rating);
   return (
     <div className="bg-primary/[0.07] rounded-[12px] flex  flex-col justify-between  w-full p-10  h-[293px]  font-inter">
       <div className=" flex gap-5">
@@ -87,6 +86,13 @@ const MyBooking = (data: any) => {
             rating={info.rating}
           />
         ) : info.status === "cancelled" ? (
+          <Button
+            disabled
+            className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"
+          >
+            Booking Canceled
+          </Button>
+        ) : info.status === "declined" ? (
           <Button
             disabled
             className=" w-[232px] rounded-[8px] font-clash text-2xl font-medium text-white bg-primary/20 py-6"

@@ -17,7 +17,7 @@ import { CopyIcon, LoaderPinwheel } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "@/hooks/use-toast";
-import { getUser } from "@/lib/api";
+import { getUser, revalidateMyBooking } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { revalidateTag } from "next/cache";
 import { Rating } from "@smastrom/react-rating";
@@ -49,18 +49,15 @@ const GuideCard = ({ data, user }: any) => {
         },
       });
       const json = await res.json();
-      console.log("response", json);
       if (json.success) {
-        console.log("true");
-        revalidateTag("myBookings");
         toast({
           title: "Booked successfully",
           description:
             "Your booking has been applied. Wait for the guide to contact you.",
           variant: "success",
         });
+        revalidateMyBooking();
       } else {
-        console.log("false");
         toast({
           title: "Sorry!",
           description: json.message,
