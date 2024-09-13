@@ -3,7 +3,8 @@ import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(request: NextRequest) {
-  const { id, name, url, about, age, lang, location } = await request.json();
+  const { id, name, url, about, age, lang, location, price } =
+    await request.json();
   const languages = lang.split(",");
   const session = await auth();
   if (!session?.user) {
@@ -20,6 +21,7 @@ export async function PATCH(request: NextRequest) {
       data: {
         name: name as string,
         about: about as string,
+        price: Number(price),
         age: Number(age),
         location: location as string,
         languages: {

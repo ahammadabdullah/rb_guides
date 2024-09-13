@@ -42,7 +42,10 @@ const Profile = ({ info }: any) => {
     const about = formData.get("about");
     const location = formData.get("location");
     const lang = formData.get("languages");
+    const price = formData.get("price");
     const age = formData.get("age");
+    // console.log(name, about, location, lang, price, age, image);
+    console.log(age);
     const res = await fetch("/api/profile", {
       method: "PATCH",
       body: JSON.stringify({
@@ -52,6 +55,7 @@ const Profile = ({ info }: any) => {
         location,
         lang,
         age,
+        price,
         url: image,
       }),
     })
@@ -154,6 +158,20 @@ const Profile = ({ info }: any) => {
                 </div>
                 <div className="grid gap-4 ">
                   <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="price" className="text-right">
+                      Price
+                    </Label>
+                    <Input
+                      name="price"
+                      id="price"
+                      type="number"
+                      defaultValue={info?.price ?? ""}
+                      className="col-span-3 rounded-[8px] border-none bg-primary/[0.07] h-14 pl-4"
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-4 ">
+                  <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">
                       About You
                     </Label>
@@ -179,10 +197,10 @@ const Profile = ({ info }: any) => {
                   </div>
                 </div>
                 <div className=" grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
+                  <Label htmlFor="age" className="text-right">
                     Age
                   </Label>
-                  <Select name="age">
+                  <Select defaultValue={info?.age} name="age">
                     <SelectTrigger className="w-[334px] rounded-[8px] border-none bg-primary/[0.07] h-14 pl-4">
                       <SelectValue placeholder="Select Age" />
                     </SelectTrigger>
@@ -228,6 +246,12 @@ const Profile = ({ info }: any) => {
       <div>
         <div className="text-white/50  text-sm space-y-3">
           <div>
+            <div className="mb-3">
+              <span className="font-semibold text-sm text-white  pr-1">
+                Price:
+              </span>
+              {info?.price}
+            </div>
             <span className="font-semibold text-sm text-white  pr-1">Age:</span>
             {info?.age}
             <span className="font-semibold text-sm text-white  pr-1 pl-5">
