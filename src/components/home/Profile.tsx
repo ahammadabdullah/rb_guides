@@ -156,7 +156,11 @@ const Profile = ({ info }: any) => {
                     />
                   </div>
                 </div>
-                <div className="grid gap-4 ">
+                <div
+                  className={`grid gap-4 ${
+                    info.role !== "guide" ? "hidden" : ""
+                  }`}
+                >
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="price" className="text-right">
                       Price
@@ -246,12 +250,14 @@ const Profile = ({ info }: any) => {
       <div>
         <div className="text-white/50  text-sm space-y-3">
           <div>
-            <div className="mb-3">
-              <span className="font-semibold text-sm text-white  pr-1">
-                Price:
-              </span>
-              {info?.price}
-            </div>
+            {info.role === "guide" && (
+              <div className="mb-3">
+                <span className="font-semibold text-sm text-white  pr-1">
+                  Price:
+                </span>
+                {info?.price}
+              </div>
+            )}
             <span className="font-semibold text-sm text-white  pr-1">Age:</span>
             {info?.age}
             <span className="font-semibold text-sm text-white  pr-1 pl-5">
