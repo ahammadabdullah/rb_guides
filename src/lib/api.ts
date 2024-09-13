@@ -206,3 +206,45 @@ export async function cancelMyBooking(id: number | string) {
 export async function revalidateMyBooking() {
   revalidateTag("myBookings");
 }
+
+export async function getSupportMessages() {
+  return fetch(`${process.env.URL}/api/support`, {
+    headers: headers(),
+    next: { tags: ["support"] },
+  }).then((res) => res.json());
+}
+
+export async function confirmTicket(id: number | string) {
+  return fetch(`${process.env.URL}/api/support?id=${id}&status=confirmed`, {
+    method: "PUT",
+    headers: headers(),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      revalidateTag("support");
+      return res;
+    });
+}
+
+export async function createTicket(data: any) {
+  try {
+    const res = await prisma.ticket.create({
+      data: {
+        userId: Number(data.userId),
+        name: data.name as string,
+        title: data.title as string,
+        message: data.message as string,
+      },
+    });
+    revalidateTag("support");
+    return {
+      success: true,
+      message: "Ticket created successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong, please try again",
+    };
+  }
+}

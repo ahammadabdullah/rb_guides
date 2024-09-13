@@ -1,6 +1,3 @@
-import { auth } from "@/auth";
-import { useSession } from "next-auth/react";
-import { tree } from "next/dist/build/templates/app-page";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 

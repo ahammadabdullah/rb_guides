@@ -55,7 +55,7 @@ const BookingList = ({ guides: bookings }: { guides: any }) => {
           {bookings?.length === 0 && (
             <TableRow>
               <TableCell colSpan={7} className="text-center">
-                No Guides Found
+                No Bookings Found
               </TableCell>
             </TableRow>
           )}
@@ -77,6 +77,8 @@ const BookingList = ({ guides: bookings }: { guides: any }) => {
                         ? "Accepted"
                         : booking.status === "declined"
                         ? "Declined"
+                        : booking.status === "completed"
+                        ? "Completed"
                         : "Canceled"
                     }`}
                   </Button>
