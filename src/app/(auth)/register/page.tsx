@@ -1,7 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { toast } from "@/hooks/use-toast";
-import prisma from "@/lib/db";
 import { UploadButton } from "@/lib/utils";
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
@@ -20,10 +22,11 @@ const RegisterPage = () => {
     const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
+    const role = formData.get("role");
     const url = image?.url ?? `https://avatar.vercel.sh/${name}`;
     const res = await fetch("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify({ name, email, password, url }),
+      body: JSON.stringify({ name, email, password, url, role }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -110,6 +113,25 @@ const RegisterPage = () => {
             id="password"
             placeholder="******"
           />
+        </div>
+        <div className="mt-2 space-y-2 font-bold">
+          <label className="text-xl font-bold " htmlFor="role">
+            You&apos;re a :
+          </label>
+          <RadioGroup name="role" defaultValue="user" className="flex gap-5">
+            <div className="flex items-center space-x-2 ">
+              <RadioGroupItem value="user" id="r1" />
+              <Label className="text-xl" htmlFor="r1">
+                Tourist
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="guide" id="r2" />
+              <Label className="text-xl" htmlFor="r2">
+                Guide
+              </Label>
+            </div>
+          </RadioGroup>
         </div>
         <div className="mt-10">
           <Button
